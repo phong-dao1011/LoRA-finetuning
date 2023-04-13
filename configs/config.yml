@@ -1,0 +1,87 @@
+# Path to pretrained model or model identifier from huggingface.co/models.
+pretrained_model_name_or_path: 
+# Revision of pretrained model identifier from huggingface.co/models.
+revision:
+# The name of the Dataset (from the HuggingFace hub) to train on (could be your own, possibly private,
+# dataset). It can also be a path pointing to a local copy of a dataset in your filesystem,
+# or to a folder containing files that 🤗 Datasets can understand.
+dataset_name:
+# The config of the Dataset, leave as None if there's only one config.
+dataset_config_name:
+# A folder containing the training data. Folder contents must follow the structure described in
+# https://huggingface.co/docs/datasets/image_dataset#imagefolder. In particular, a `metadata.jsonl` file
+# must exist to provide the captions for the images. Ignored if `dataset_name` is specified.
+train_data_dir: 
+# The column of the dataset containing an image.
+image_column:
+# The column of the dataset containing a caption or a list of captions.
+caption_column:
+# A prompt that is sampled during training for inference.
+validation_prompt:
+# Number of images that should be generated during validation with `validation_prompt`.
+num_validation_images: 4
+# Run fine-tuning validation every X epochs. The validation process consists of running the prompt
+# `validation_prompt` multiple times: `num_validation_images`.
+validation_epochs: 1 
+# For debugging purposes or quicker training, truncate the number of training examples to this 
+# value if set.
+max_train_samples:
+# The output directory where the model predictions and checkpoints will be written.
+output_dir: sd-model-finetuned-lora
+# The directory where the downloaded models and datasets will be stored.
+cache_dir:
+# A seed for reproducible training.
+seed:
+# The resolution for input images, all the images in the train/validation dataset will be resized to this resolution
+resolution: 512
+# Whether to center crop the input images to the resolution. If not set, the images will be randomly cropped. The images will be resized to the resolution first before cropping.
+center_crop: False
+# whether to randomly flip images horizontally
+random_flip: False
+# Batch size (per device) for the training dataloader.
+train_batch_size: 1
+#
+num_train_epochs: 10
+# Total number of training steps to perform.  If provided, overrides num_train_epochs.
+max_train_steps:
+# Number of updates steps to accumulate before performing a backward/update pass.
+gradient_accumulation_steps: 1
+# Whether to use gradient checkpointing to save memory at the expense of slower backward pass.
+gradient_checkpointing: False
+# Initial learning rate (after the potential warmup period) to use.
+learning_rate: 0.0001
+# Scale the learning rate by the number of GPUs, gradient accumulation steps, and batch size.
+scale_lr: False
+# The scheduler type to use. Choose between ["linear", "cosine", "cosine_with_restarts", "polynomial", "constant", "constant_with_warmup"]
+lr_scheduler: constant
+# Number of steps for the warmup in the lr scheduler.
+lr_warmup_steps: 500
+# Whether to use 8-bit Adam from bitsandbytes.
+use_8bit_adam: False
+# Number of subprocesses to use for data loading. 0 means that the data will be loaded in the main process.
+dataloader_num_workers: 0
+# The beta1 parameter for the Adam optimizer.
+adam_beta1: 0.9
+adam_beta2: 0.999
+adam_weight_decay: 0.01
+adam_epsilon: 0.00000001
+max_grad_norm: 1.0
+logging_dir: logs
+# Whether to use mixed precision. Choose between fp16 and bf16 (bfloat16). Bf16 requires PyTorch >=
+# 1.10.and an Nvidia Ampere GPU.  Default to the value of accelerate config of the current system or the
+# flag passed with the `accelerate.launch` command. Use this argument to override the accelerate config.
+# Available choices: ["no", "fp16", "bf16"]
+mixed_precision: fp16
+# Report to training dashboard
+report_to: wandb
+# For distributed training: local_rank
+local_rank: -1
+# Save a checkpoint of the training state every X updates. These checkpoints are only suitable for resuming
+# training using 'resume_from_checkpoint'.
+checkpointing_steps: 500
+# Max number of checkpoints to store.
+checkpoints_total_limit: 5
+# Whether training should be resumed from a previous checkpoint.
+resume_from_checkpoint:
+# Whether to use xformers.
+enable_xformers_memory_efficient_attention: False

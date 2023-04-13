@@ -1,0 +1,8 @@
+datasets
+accelerate
+huggingface_hub
+torchvision
+transformers
+git+https://github.com/huggingface/diffusers.git
+omegaconf
+pillow
